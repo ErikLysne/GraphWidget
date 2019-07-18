@@ -168,5 +168,9 @@ setSampleBufferSize(const int size)
 ## 4. Function List
  | Function | Description |
  | ---------- | ------------- |
- | `GraphWidget(int width = 400, int height = 200, QWidget* parent = nullptr)` | Constructor for the GraphWidget. `Width` and `Height` specifies the width and height of the active graph area, not the widget. The widget itself will be slightly larger to fit the axis and lables. |
+ |
+ ```c++
+ GraphWidget(int width = 400, int height = 200, QWidget* parent = nullptr)
+ ```
+ | Constructor for the GraphWidget. `Width` and `Height` specifies the width and height of the active graph area, not the widget. The widget itself will be slightly larger to fit the axis and lables. |
 
