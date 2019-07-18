@@ -93,7 +93,7 @@ This should add 50 data points with randomly generated values in the range 0 - 9
 
 <a name="example2"></a>
 ## 3. Updating Graph Periodically
-In this example we use a `QTimer` to add values to periodically to the graph by connecting the `QTimer`s `timeout` signal to a lambda function. In the lambda we update a static variable to keep track of time, and use the `qSin()` function (found in `<QtMath>`) to construct a 1 Hz sine wave.
+In this example we use a `QTimer` to add values periodically to the graph by connecting the `QTimer`s `timeout` signal to a lambda function. In the lambda we update a static variable to keep track of time, and use the `qSin()` function (found in `<QtMath>`) to construct a 1 Hz sine wave.
 ```c++
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
