@@ -4,6 +4,7 @@ This is a C++ Qt static library which adds a widget to display graphs in Qt.
 
 1. [Installation](#installation)
 2. [Minimum Working Example](#example1)
+3. [Updating Graph Periodically](#example2)
 
 <a name="installation"></a>
 ## 1. Installation and Usage
@@ -89,7 +90,7 @@ This should add 50 data points with randomly generated values in the range 0 - 9
 ![alt text](https://user-images.githubusercontent.com/17698478/61420500-1727ef80-a903-11e9-97e7-5dd01b201e13.png)
 
 <a name="example2"></a>
-## 3. Update Graph Periodically
+## 3. Updating Graph Periodically
 In this example we use a `QTimer` to add values to periodically to the graph by connecting the `QTimer`s `timeout` signal to a lambda function. In the lambda we update a static variable to keep track of time, and use the `qSin()` function (found in `<QtMath>`) to construct a 1 Hz sine wave.
 ```c++
 #include "mainwindow.h"
@@ -164,5 +165,8 @@ The graph continuously adds data to the graph, but after the number of data poin
 setSampleBufferSize(const int size)
 ```
 
-
+## 4. Function List
+ | Function | Description |
+ | ---------- | ------------- |
+ | `GraphWidget(int width = 400, int height = 200, QWidget* parent = nullptr)` | Constructor for the GraphWidget. `Width` and `Height` specifies the width and height of the active graph area, not the widget. The widget itself will be slightly larger to fit the axis and lables. |
 
