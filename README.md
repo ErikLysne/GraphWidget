@@ -28,4 +28,45 @@ This is a C++ Qt static library which adds a widget to display graphs in Qt.
         ```c++
         #include <GraphWidget/graphwidget.h>
         ```
+        
+## 2. Minimum Working Example
+The following example shows how to create a new `GraphWidget` object and add it to a layout in `mainwindow.cpp`:
+```c++
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 
+#include <QGridLayout>
+
+#include <GraphWidget/graphwidget.h>
+
+MainWindow::MainWindow(QWidget* parent)
+: QMainWindow(parent)
+, ui(new Ui::MainWindow)
+{
+ui->setupUi(this);
+setWindowTitle("Simple Graph Example");
+
+// Create a new layout
+QGridLayout* layout = new QGridLayout;
+
+// Create a new graph widget object with width = 400 and height = 200
+GraphWidget* graph = new GraphWidget(400, 200, this);
+
+// Add the graph to the layout
+layout->addWidget(graph);
+
+// Create a new widget to bind the layout
+QWidget* widget = new QWidget(this);
+widget->setLayout(layout);
+
+// Make the widget the central widget
+setCentralWidget(widget);
+}
+
+MainWindow::~MainWindow()
+{
+delete ui;
+}
+```
+This should generate something like this:
+![alt text](https://user-images.githubusercontent.com/17698478/61420206-c4016d00-a901-11e9-9189-d81414aca1d2.png)
