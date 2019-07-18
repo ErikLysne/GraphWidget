@@ -5,6 +5,8 @@ This is a C++ Qt static library which adds a widget to display graphs in Qt.
 1. [Installation](#installation)
 2. [Minimum Working Example](#example1)
 3. [Updating Graph Periodically](#example2)
+4. [Function List](#functions)
+5. [Themes](#themes)
 
 <a name="installation"></a>
 ## 1. Installation and Usage
@@ -164,13 +166,24 @@ The graph continuously adds data to the graph, but after the number of data poin
 ```c++
 setSampleBufferSize(const int size)
 ```
-
+<a name="functions"></a>
 ## 4. Function List
  | Function | Description |
  | ---------- | ------------- |
- |
- ```c++
- GraphWidget(int width = 400, int height = 200, QWidget* parent = nullptr)
- ```
- | Constructor for the GraphWidget. `Width` and `Height` specifies the width and height of the active graph area, not the widget. The widget itself will be slightly larger to fit the axis and lables. |
+ | `GraphWidget(int width = 400, int height = 200, QWidget* parent = nullptr)` | Constructor for the GraphWidget. `Width` and `Height` specifies the width and height of the active graph area, not the widget. The widget itself will be slightly larger to fit the axis and lables. |
+ | `void addData(double xData, double yData)` | Adds a new pair of data to the graph. |
+ | `void setSampleBufferSize(const int size)` | Sets the maximum number of samples stored on the graph. If `size` is set to a number lower than the number of samples already plotted, the graph will be resized. |
+ | `void setTheme(const GraphStyler::GraphThemeSelection theme)` | Changes the theme of the graph. Two themes are currently supported, `GraphStyler::BasicTheme` and `GraphStyler::DarkTheme` (see [themes]($themes)).|
+ | `void setXTicks(const int ticks)` | Sets number of ticks on the x-axis. |
+ | `void setYTicks(const int ticks)` | Sets number of ticks on the y-axis. |
+ | `void setTicksToMatchData(const bool match = true);` | Sets the number of ticks on the x-axis to match the number of samples (assumes data on x-axis is linear). |
+
+<a name="themes"></a>
+## 4. Themes
+### Basic Theme
+![alt text](https://user-images.githubusercontent.com/17698478/61422580-9e2d9580-a90c-11e9-9ebe-1a9ff9e1592f.png)
+
+### Dark Theme
+![alt text](https://user-images.githubusercontent.com/17698478/61422606-aede0b80-a90c-11e9-99df-d69d7fcb9370.png)
+
 
