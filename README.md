@@ -179,7 +179,7 @@ setSampleBufferSize(const int size)
  | `void setTicksToMatchData(const bool match = true);` | Sets the number of ticks on the x-axis to match the number of samples (assumes data on x-axis is linear). |
 
 <a name="themes"></a>
-## 4. Themes
+## 5. Themes
 ### Basic Theme
 ![alt text](https://user-images.githubusercontent.com/17698478/61422580-9e2d9580-a90c-11e9-9ebe-1a9ff9e1592f.png)
 
