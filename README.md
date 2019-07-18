@@ -140,7 +140,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     // Update the graph with new data when the timer timeouts
     connect(timer, &QTimer::timeout,
-            graph, [graph, interval, angularFrequency] ()
+            this, [graph, interval, angularFrequency] ()
     {
         static double xData = 0;
         double yData = qSin(angularFrequency*xData);
