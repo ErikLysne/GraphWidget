@@ -170,10 +170,10 @@ setSampleBufferSize(const int size)
 ## 4. Function List
  | Function | Description |
  | ---------- | ------------- |
- | `GraphWidget(int width = 400, int height = 200, QWidget* parent = nullptr)` | Constructor for the GraphWidget. `Width` and `Height` specifies the width and height of the active graph area, not the widget. The widget itself will be slightly larger to fit the axis and lables. |
+ | `GraphWidget(int width = 400, int height = 200, QWidget* parent = nullptr)` | Constructor for the GraphWidget. `width` and `height` specifies the width and height of the active graph area, not the widget. The widget itself will be slightly larger to fit the axis and lables. |
  | `void addData(double xData, double yData)` | Adds a new pair of data to the graph. |
- | `void setSampleBufferSize(const int size)` | Sets the maximum number of samples stored on the graph. If `size` is set to a number lower than the number of samples already plotted, the graph will be resized. |
- | `void setTheme(const GraphStyler::GraphThemeSelection theme)` | Changes the theme of the graph. Two themes are currently supported, `GraphStyler::BasicTheme` and `GraphStyler::DarkTheme` (see [themes]($themes)).|
+ | `void setSampleBufferSize(const int size)` | Sets the maximum number of samples stored on the graph. If `size` is set to a number smaller than the number of samples already plotted, the graph will be resized. |
+ | `void setTheme(const GraphStyler::GraphThemeSelection theme)` | Changes the theme of the graph. Two themes are currently supported, `GraphStyler::BasicTheme` and `GraphStyler::DarkTheme` (see [themes](#themes)).|
  | `void setXTicks(const int ticks)` | Sets number of ticks on the x-axis. |
  | `void setYTicks(const int ticks)` | Sets number of ticks on the y-axis. |
  | `void setTicksToMatchData(const bool match = true);` | Sets the number of ticks on the x-axis to match the number of samples (assumes data on x-axis is linear). |
