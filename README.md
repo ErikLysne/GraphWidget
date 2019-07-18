@@ -162,7 +162,7 @@ MainWindow::~MainWindow()
 
 ![alt text](https://user-images.githubusercontent.com/17698478/61421609-19407d00-a908-11e9-9f82-65e746397725.gif)
 
-The graph continuously adds data to the graph, but after the number of data points reach a certain value, old data will be pushed out. This is to prevent the graph from cluttering when data is plotted continuously for a long time. The default maximum number of samples is 100, but can be changed by calling
+The graph continuously adds data to the graph, but after the number of data points reach a certain value, old data will be pushed out. This is to prevent the graph from cluttering when data is plotted continuously for a long time. The default maximum number of samples is 100. This can be changed by calling
 ```c++
 setSampleBufferSize(const int size)
 ```
