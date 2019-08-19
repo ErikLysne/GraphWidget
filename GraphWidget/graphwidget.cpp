@@ -1,5 +1,6 @@
 #include "graphwidget.h"
 #include <QPainter>
+#include <QFontMetrics>
 
 #include <QtDebug>
 
@@ -7,8 +8,8 @@ GraphWidget::GraphWidget(int width, int height, QWidget* parent)
     : QWidget(parent)
     , m_width(width)
     , m_heigth(height)
-    , m_window(width, height)
-    , m_style(GraphStyler::BasicTheme)
+    , m_styler(new BasicTheme)
+    , m_window(width, height, m_styler.getTheme())
     , m_xAxis(width, 20)
     , m_yAxis(height, 10)
     , m_xDataSet()
@@ -35,9 +36,10 @@ void GraphWidget::setSampleBufferSize(const int size)
     update();
 }
 
-void GraphWidget::setTheme(const GraphStyler::GraphThemeSelection theme)
+void GraphWidget::setTheme(BasicTheme* theme)
 {
-    m_style.setTheme(theme);
+    m_window.setTheme(theme);
+    m_styler.setTheme(theme);
     update();
 }
 
@@ -87,7 +89,7 @@ void GraphWidget::paintEvent(QPaintEvent* /*event*/)
 
 void GraphWidget::drawBackground(QPainter& painter)
 {
-    m_style.backgroundStyle(painter);
+    m_styler.backgroundStyle(painter);
 
     QPointF borderPosition = m_window.borderPosition();
     QSizeF borderSize = m_window.borderSize();
@@ -96,12 +98,12 @@ void GraphWidget::drawBackground(QPainter& painter)
     QPainterPath path;
     path.addRect(background);
 
-    painter.fillPath(path, m_style.backgroundColor());
+    painter.fillPath(path, m_styler.backgroundColor());
 }
 
 void GraphWidget::drawGrid(QPainter& painter)
 {
-    m_style.gridStyle(painter);
+    m_styler.gridStyle(painter);
 
     double borderTopYVal = m_window.borderPosition().y();
 
@@ -126,7 +128,7 @@ void GraphWidget::drawGrid(QPainter& painter)
 
 void GraphWidget::drawBorder(QPainter& painter)
 {
-    m_style.borderStyle(painter);
+    m_styler.borderStyle(painter);
 
     QPointF borderPosition = m_window.borderPosition();
     QSizeF borderSize = m_window.borderSize();
@@ -137,7 +139,7 @@ void GraphWidget::drawBorder(QPainter& painter)
 
 void GraphWidget::drawXAxis(QPainter& painter)
 {
-    m_style.axisStyle(painter);
+    m_styler.axisStyle(painter);
 
     if (m_ticksMatchData)
         setXTicks(m_xDataSet.size());
@@ -153,7 +155,7 @@ void GraphWidget::drawXAxis(QPainter& painter)
 
 void GraphWidget::drawYAxis(QPainter& painter)
 {
-    m_style.axisStyle(painter);
+    m_styler.axisStyle(painter);
 
     for(auto value : m_yAxis.values())
     {
@@ -166,7 +168,7 @@ void GraphWidget::drawYAxis(QPainter& painter)
 
 void GraphWidget::drawXLabels(QPainter& painter)
 {
-    m_style.labelStyle(painter);
+    m_styler.labelStyle(painter);
 
     int labelCount = 0;
     for(auto value : m_xAxis.values())
@@ -176,7 +178,7 @@ void GraphWidget::drawXLabels(QPainter& painter)
             std::pair<double, double> dataRange = m_xDataSet.range();
 
             QString label = QString::number(m_xAxis.fitAxisValueToRange(value, dataRange),
-                                            'g', 3);
+                                            'f', 2);
             painter.drawText(textPoint, label);
         }
     }
@@ -184,17 +186,35 @@ void GraphWidget::drawXLabels(QPainter& painter)
 
 void GraphWidget::drawYLabels(QPainter& painter)
 {
-    m_style.labelStyle(painter);
+    m_styler.labelStyle(painter);
+    QFont font(m_styler.getTheme()->labelFontName(),
+               m_styler.getTheme()->labelFontSize());
+    QFontMetrics metrics(font);
+
+    std::pair<double, double> dataRange = m_yDataSet.range();
+
+    int maxHorizontalAdvance = 0;
+    for(auto value : m_yAxis.values()) {
+        QString label = QString::number(m_yAxis.fitAxisValueToRange(value, dataRange),
+                                        'f', 2);
+        int horizontalAdvance = metrics.boundingRect(label).width();
+        if (horizontalAdvance > maxHorizontalAdvance)
+            maxHorizontalAdvance = horizontalAdvance;
+    }
+
+    m_window.setYAxisPadding(maxHorizontalAdvance);
 
     int labelCount = 0;
-    for(auto value : m_yAxis.values())
-    {
+    for (auto value : m_yAxis.values()) {
         if (++labelCount % m_yLabelSkip) {
-            QPointF textPoint = m_window.yAxisTextPoint(value);
-            std::pair<double, double> dataRange = m_yDataSet.range();
-
             QString label = QString::number(m_yAxis.fitAxisValueToRange(value, dataRange),
-                                            'g', 3);
+                                            'f', 2);
+
+            int labelWidth = metrics.boundingRect(label).width();
+            int pixelShift = maxHorizontalAdvance - labelWidth;
+
+            QPointF textPoint = m_window.yAxisTextPoint(value, pixelShift);
+
             painter.drawText(textPoint, label);
         }
     }
@@ -219,11 +239,11 @@ void GraphWidget::drawGraph(QPainter& painter)
         QPointF graphPoint(borderPosition.x() + x,
                           borderPosition.y() + borderSize.height() - y);
 
-        m_style.graphMarkerStyle(painter);
+        m_styler.graphMarkerStyle(painter);
         painter.drawPoint(graphPoint);
 
         if (i > 0) {
-            m_style.graphLineStyle(painter);
+            m_styler.graphLineStyle(painter);
             painter.drawLine(precedingPoint, graphPoint);
         }
 

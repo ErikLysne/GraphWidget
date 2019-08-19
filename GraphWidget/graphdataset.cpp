@@ -1,4 +1,6 @@
 #include "graphdataset.h"
+#include <vector>
+#include <algorithm>
 
 GraphDataSet::GraphDataSet()
     : m_maxValue(0)

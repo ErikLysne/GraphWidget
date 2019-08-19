@@ -8,15 +8,10 @@
 class GraphStyler
 {
 public:
-    enum GraphThemeSelection {
-        BasicTheme,
-        DarkTheme
-    };
+    GraphStyler(BasicTheme* theme = new BasicTheme);
 
-public:
-    GraphStyler(const GraphThemeSelection theme = BasicTheme);
-
-    void setTheme(const GraphThemeSelection theme);
+    void setTheme(BasicTheme* theme);
+    BasicTheme* getTheme();
 
     void backgroundStyle(QPainter& painter) const;
     QColor backgroundColor() const;
@@ -28,7 +23,7 @@ public:
     void graphLineStyle(QPainter& painter) const;
 
 private:
-    GraphAbstractTheme* m_theme;
+    BasicTheme* m_theme;
 
 };
 

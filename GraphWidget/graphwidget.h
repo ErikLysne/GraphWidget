@@ -17,7 +17,7 @@ public:
     void addData(double xData, double yData);
     void setSampleBufferSize(const int size);
 
-    void setTheme(const GraphStyler::GraphThemeSelection theme);
+    void setTheme(BasicTheme* theme);
 
     void setXTicks(const int ticks);
     void setYTicks(const int ticks);
@@ -43,8 +43,8 @@ private:
     int m_width;
     int m_heigth;
 
+    GraphStyler m_styler;
     GraphWindow m_window;
-    GraphStyler m_style;
     GraphAxis m_xAxis;
     GraphAxis m_yAxis;
     GraphDataSet m_xDataSet;

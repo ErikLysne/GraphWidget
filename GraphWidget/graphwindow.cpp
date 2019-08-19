@@ -1,8 +1,11 @@
 #include "graphwindow.h"
 
-GraphWindow::GraphWindow(double width, double height)
+GraphWindow::GraphWindow(double width, double height, BasicTheme* theme)
     : m_graphWidth(width)
     , m_graphHeight(height)
+    , m_theme(theme)
+    , m_xAxisPadding(1.25*theme->labelFontSize())
+    , m_yAxisPadding(1.1*theme->labelFontSize())
 {
 
 }
@@ -81,10 +84,23 @@ QPointF GraphWindow::yAxisMarginEndPoint(const double value) const
                    position.y() + size.height() - value);
 }
 
-QPointF GraphWindow::yAxisTextPoint(const double value) const
+QPointF GraphWindow::yAxisTextPoint(const double value, const int pixelShift) const
 {
+    int labelFontSize = m_theme->labelFontSize();
     QPointF yMarginEndPoint = yAxisMarginEndPoint(value);
 
-    return QPointF(yMarginEndPoint.x() - m_yAxisPadding,
-                   yMarginEndPoint.y());
+    return QPointF(yMarginEndPoint.x() - m_yAxisPadding + pixelShift,
+                   yMarginEndPoint.y() + 0.5*labelFontSize);
+}
+
+void GraphWindow::setTheme(BasicTheme* theme)
+{
+    m_theme = theme;
+    m_xAxisPadding = 1.25*theme->labelFontSize();
+
+}
+
+void GraphWindow::setYAxisPadding(int padding)
+{
+    m_yAxisPadding = 1.1*padding;
 }

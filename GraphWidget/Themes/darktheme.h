@@ -1,9 +1,9 @@
 #ifndef DARKTHEME_H
 #define DARKTHEME_H
 
-#include "graphabstracttheme.h"
+#include "basictheme.h"
 
-class DarkTheme : public GraphAbstractTheme
+class DarkTheme : public BasicTheme
 {
 public:
     DarkTheme();

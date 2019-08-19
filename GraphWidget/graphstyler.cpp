@@ -1,25 +1,23 @@
 #include "graphstyler.h"
 
-GraphStyler::GraphStyler(const GraphThemeSelection theme)
-    : m_theme(new class BasicTheme())
+GraphStyler::GraphStyler(BasicTheme* theme)
+    : m_theme(new BasicTheme)
 {
-    if (theme != BasicTheme)
+    if (dynamic_cast<BasicTheme*>(theme) != nullptr)
         setTheme(theme);
 }
 
-void GraphStyler::setTheme(const GraphThemeSelection theme)
+void GraphStyler::setTheme(BasicTheme* theme)
 {
     if (m_theme != nullptr)
         delete m_theme;
 
-    switch (theme) {
-    case BasicTheme:
-        m_theme = new class BasicTheme;
-        break;
-    case DarkTheme:
-        m_theme = new class DarkTheme;
-        break;
-    }
+    m_theme = theme;
+}
+
+BasicTheme* GraphStyler::getTheme()
+{
+    return m_theme;
 }
 
 void GraphStyler::backgroundStyle(QPainter& painter) const
